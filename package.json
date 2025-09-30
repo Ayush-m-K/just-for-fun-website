@@ -1,11 +1,12 @@
 {
-  "name": "flames",
+  "name": "match-meter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://github.com/Ayush-m-K/just-for-fun-website.git",
   "scripts": {
-    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
