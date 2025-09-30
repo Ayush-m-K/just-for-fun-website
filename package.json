@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/Ayush-m-K/just-for-fun-website.git",
+  "homepage": "https://Ayush-m-K.github.io/just-for-fun-website",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
