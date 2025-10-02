@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./index.css"
 
 function Signup() {
@@ -15,10 +16,10 @@ function Signup() {
                     <label className="label" htmlFor="password">Password</label><input id="password" type="password" /> <br />
                 </div>
                 <div>
-                    Have an account?<a href="./login">Login</a>
+                    Have an account?<Link to="/">Login</Link>
                 </div>
-                <button className="" type="submit">Login</button>
-            </div>
+                <button className="submit">Signup</button>
+            </div >
         </>)
 }
 

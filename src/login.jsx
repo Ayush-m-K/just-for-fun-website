@@ -1,9 +1,44 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        if (loading) return;
+        setLoading(true);
+        if (!username || !password) {
+            alert("Enter all credentials")
+            return;
+        }
+        fetch("http://localhost:3000/api/user/login",
+            {
+                method: "POST",
+                body: JSON.stringify({ username: username, password: password }),
+                headers: { "Content-Type": "application/json" }
+            }
+        ).then(res =>
+            res.json()
+                .then(data => {
+                    if (!res.ok) {
+                        throw new Error(data.message || "Something went wrong")
+                    }
+                    return data;
+                })
+        ).then(data => {
+            localStorage.setItem("token", data.token);
+            console.log("Login successfull");
+            navigate("/dashboard")
+        }).catch(err => {
+            console.log(err);
+            alert(err.message);
+        }).finally(() => setLoading(false))
+    }
+
     return (
         <>
             <div className="container">
@@ -17,18 +52,9 @@ function Login() {
                     <input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} /> <br />
                 </div>
                 <div>
-                    Dont have an account?<a href="./signup">create an account</a>
+                    Dont have an account?<Link to="/signup">create an account</Link>
                 </div>
-                <button className="submit" type="submit" onClick={async () => {
-                    const res = await fetch("http://localhost:3000/api/user/login",
-                        {
-                            method: "POST",
-                            body: JSON.stringify({ username: username, password: password }),
-                            headers: { "Content-Type": "application/json" }
-                        }
-                    );
-                    console.log(await res.json())
-                }}>Login</button>
+                <button className="submit" disabled={loading} onClick={handleLogin}>{loading ? "Logging in..." : "Login"}</button>
             </div >
         </>)
 }
