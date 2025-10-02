@@ -5,14 +5,15 @@ import "./index.css";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         if (loading) return;
         setLoading(true);
         if (!username || !password) {
-            alert("Enter all credentials")
+            alert("Enter all credentials");
+            setLoading(false);
             return;
         }
         fetch("http://localhost:3000/api/user/login",
@@ -32,7 +33,7 @@ function Login() {
         ).then(data => {
             localStorage.setItem("token", data.token);
             console.log("Login successfull");
-            navigate("/dashboard")
+            navigate("/dashboard");
         }).catch(err => {
             console.log(err);
             alert(err.message);
